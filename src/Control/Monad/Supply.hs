@@ -19,17 +19,17 @@ module Control.Monad.Supply
     , supplies
     ) where
 
-import           Control.Monad           (replicateM)
-import           Control.Monad.Except    (ExceptT, MonadError, throwError, catchError)
-import           Control.Monad.Fix       (MonadFix)
-import           Control.Monad.IO.Class  (MonadIO)
-import           Control.Monad.Reader    (ReaderT)
-import           Control.Monad.State     (StateT, get, gets, put, evalStateT, runStateT)
-import           Control.Monad.Trans     (MonadTrans, lift)
-import           Control.Monad.Writer    (WriterT)
+import Control.Monad           (replicateM)
+import Control.Monad.Except    (ExceptT, MonadError, throwError, catchError)
+import Control.Monad.Fix       (MonadFix)
+import Control.Monad.IO.Class  (MonadIO)
+import Control.Monad.Reader    (ReaderT)
+import Control.Monad.State     (StateT, get, gets, put, evalStateT, runStateT)
+import Control.Monad.Trans     (MonadTrans, lift)
+import Control.Monad.Writer    (WriterT)
 #if !MIN_VERSION_base(4,11,0)
-import           Control.Monad.Fail      (MonadFail)
-import           Data.Semigroup          (Semigroup, (<>))
+import Control.Monad.Fail      (MonadFail)
+import Data.Semigroup          (Semigroup, (<>))
 #endif
 
 import qualified Control.Monad.Trans.State.Lazy as LazyState
@@ -62,7 +62,7 @@ instance MonadFail m => MonadSupply s (SupplyT s m) where
     exhausted = SupplyT $ gets null
 
 -- Monad transformer instances
-instance (MonadSupply s m) => MonadSupply s (ExceptT e m) where
+instance MonadSupply s m => MonadSupply s (ExceptT e m) where
     supply = lift supply
     peek = lift peek
     exhausted = lift exhausted
