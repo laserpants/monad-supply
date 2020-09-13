@@ -27,6 +27,7 @@ import Control.Monad.Reader    (ReaderT)
 import Control.Monad.State     (StateT, get, gets, put, evalStateT, runStateT)
 import Control.Monad.Trans     (MonadTrans, lift)
 import Control.Monad.Writer    (WriterT)
+import Control.Monad.Trans.Maybe
 #if !MIN_VERSION_base(4,11,0)
 import Control.Monad.Fail      (MonadFail)
 import Data.Semigroup          (Semigroup, (<>))
@@ -73,6 +74,11 @@ instance MonadSupply s m => MonadSupply s (StateT st m) where
     exhausted = lift exhausted
 
 instance MonadSupply s m => MonadSupply s (ReaderT r m) where
+    supply = lift supply
+    peek = lift peek
+    exhausted = lift exhausted
+
+instance MonadSupply s m => MonadSupply s (MaybeT m) where
     supply = lift supply
     peek = lift peek
     exhausted = lift exhausted
